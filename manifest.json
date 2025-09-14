@@ -1,0 +1,29 @@
+{
+  "short_name": "Schedule",
+  "name": "School Schedule Viewer",
+  "description": "A visually appealing and interactive web application to display a school timetable. It intelligently highlights the current class based on the day and time and works offline.",
+  "icons": [
+    {
+      "src": "./icons/icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "./icons/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "./icons/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ],
+  "start_url": ".",
+  "background_color": "#111827",
+  "display": "standalone",
+  "scope": ".",
+  "theme_color": "#111827",
+  "orientation": "portrait-primary"
+}

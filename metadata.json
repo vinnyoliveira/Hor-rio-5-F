@@ -1,0 +1,5 @@
+{
+  "name": "Copy of School Schedule Viewer",
+  "description": "A visually appealing and interactive web application to display a school timetable. It intelligently highlights the current class based on the day and time.",
+  "requestFramePermissions": []
+}
