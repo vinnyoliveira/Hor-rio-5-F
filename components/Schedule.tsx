@@ -4,6 +4,7 @@ import type { ScheduleView, TimeSlot, DaySchedule } from '../types';
 import { useCurrentTime } from '../hooks/useCurrentTime';
 import TableView from './views/TableView';
 import ListView from './views/ListView';
+import MagazineView from './views/MagazineView';
 
 interface ScheduleProps {
   view: ScheduleView;
@@ -98,6 +99,8 @@ const Schedule: React.FC<ScheduleProps> = ({ view, activeFilters }) => {
     switch (view) {
       case 'list':
         return <ListView {...props} />;
+      case 'magazine':
+        return <MagazineView {...props} />;
       case 'table':
       default:
         return <TableView {...props} />;

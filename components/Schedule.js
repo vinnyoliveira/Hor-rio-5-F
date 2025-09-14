@@ -4,6 +4,7 @@ import { SCHEDULE_DATA, DAYS_OF_WEEK_KEYS } from '../constants.js';
 import { useCurrentTime } from '../hooks/useCurrentTime.js';
 import TableView from './views/TableView.js';
 import ListView from './views/ListView.js';
+import MagazineView from './views/MagazineView.js';
 
 const Schedule = ({ view, activeFilters }) => {
   const currentTime = useCurrentTime();
@@ -93,6 +94,8 @@ const Schedule = ({ view, activeFilters }) => {
     switch (view) {
       case 'list':
         return _jsx(ListView, { ...props });
+      case 'magazine':
+        return _jsx(MagazineView, { ...props });
       case 'table':
       default:
         return _jsx(TableView, { ...props });

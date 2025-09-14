@@ -1,23 +1,12 @@
 
-const CACHE_NAME = 'school-schedule-v4';
-const URLS_TO_CACHE = [
+const CACHE_NAME = 'school-schedule-v5'; // Bumped version
+const APP_SHELL_URLS = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/icons/icon-192x192.png',
-  '/icons/icon-512x512.png',
   '/index.js',
-  '/App.js',
-  '/constants.js',
-  '/hooks/useCurrentTime.js',
-  '/components/Schedule.js',
-  '/components/ScheduleCell.js',
-  '/components/ViewSwitcher.js',
-  '/components/views/TableView.js',
-  '/components/views/ListView.js',
-  '/components/Controls.js',
-  '/components/FilterModal.js',
-  '/components/NextClassNotifier.js'
+  '/icons/icon-192x192.png',
+  '/icons/icon-512x512.png'
 ];
 
 // On install, cache the app shell
@@ -27,7 +16,7 @@ self.addEventListener('install', event => {
     caches.open(CACHE_NAME)
       .then(cache => {
         console.log('Service Worker: Caching app shell');
-        return cache.addAll(URLS_TO_CACHE);
+        return cache.addAll(APP_SHELL_URLS);
       })
       .then(() => {
         // Force the waiting service worker to become the active service worker.
@@ -39,12 +28,11 @@ self.addEventListener('install', event => {
 // On activation, clean up old caches
 self.addEventListener('activate', event => {
   console.log('Service Worker: Activating...');
-  const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
+          if (cacheName !== CACHE_NAME) {
             console.log('Service Worker: Deleting old cache', cacheName);
             return caches.delete(cacheName);
           }
@@ -57,20 +45,44 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Use a "Stale-While-Revalidate" strategy for all requests
+
 self.addEventListener('fetch', event => {
+  const { request } = event;
+
+  // For navigation requests (e.g., loading the page), use a network-first strategy.
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request)
+        .then(response => {
+          // If the fetch is successful, cache the response for offline use.
+          if (response.ok) {
+            const cacheCopy = response.clone();
+            caches.open(CACHE_NAME).then(cache => {
+              cache.put(request, cacheCopy);
+            });
+          }
+          return response;
+        })
+        .catch(() => {
+          // If the network fails, serve the main page from the cache.
+          return caches.match('/');
+        })
+    );
+    return;
+  }
+
+  // For other requests (JS, CSS, images, etc.), use a stale-while-revalidate strategy.
   event.respondWith(
     caches.open(CACHE_NAME).then(cache => {
-      return cache.match(event.request).then(cachedResponse => {
-        const fetchPromise = fetch(event.request).then(networkResponse => {
-          // If we got a valid response, update the cache
+      return cache.match(request).then(cachedResponse => {
+        const fetchPromise = fetch(request).then(networkResponse => {
+          // If the request is successful, update the cache.
           if (networkResponse && networkResponse.ok) {
-            cache.put(event.request, networkResponse.clone());
+            cache.put(request, networkResponse.clone());
           }
           return networkResponse;
         }).catch(err => {
-            console.log('Service Worker: Fetch failed; returning offline page instead.', err);
-            // Optionally, return a custom offline fallback page here
+            console.warn('Service Worker: Fetch failed; relying on cache.', err);
         });
 
         // Return the cached response immediately, while the fetch happens in the background.

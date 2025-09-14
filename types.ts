@@ -23,4 +23,4 @@ export interface TimeSlot {
   friday: DaySchedule;
 }
 
-export type ScheduleView = 'table' | 'list';
+export type ScheduleView = 'table' | 'list' | 'magazine';

@@ -57,7 +57,7 @@ const findNextClass = (schedule, now) => {
 };
 
 const App = () => {
-  const [view, setView] = useState('table');
+  const [view, setView] = useState('magazine');
   const [activeFilters, setActiveFilters] = useState([]);
   const [updateRegistration, setUpdateRegistration] = useState(null);
   const [installPromptEvent, setInstallPromptEvent] = useState(null);

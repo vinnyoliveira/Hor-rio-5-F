@@ -57,7 +57,7 @@ const findNextClass = (schedule: TimeSlot[], now: Date): { classInfo: ClassInfo,
 };
 
 const App: React.FC = () => {
-  const [view, setView] = useState<ScheduleView>('table');
+  const [view, setView] = useState<ScheduleView>('magazine');
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const [updateRegistration, setUpdateRegistration] = useState<ServiceWorkerRegistration | null>(null);
   const [installPromptEvent, setInstallPromptEvent] = useState<Event | null>(null);
