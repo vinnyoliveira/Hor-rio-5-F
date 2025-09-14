@@ -60,7 +60,17 @@ const App: React.FC = () => {
   const [view, setView] = useState<ScheduleView>('table');
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const [updateRegistration, setUpdateRegistration] = useState<ServiceWorkerRegistration | null>(null);
+  const [installPromptEvent, setInstallPromptEvent] = useState<Event | null>(null);
   const currentTime = useCurrentTime();
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setInstallPromptEvent(e);
+    };
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+  }, []);
 
   useEffect(() => {
     const handleNewVersion = (event: Event) => {
@@ -87,6 +97,18 @@ const App: React.FC = () => {
     if (updateRegistration && updateRegistration.waiting) {
       updateRegistration.waiting.postMessage({ type: 'SKIP_WAITING' });
     }
+  };
+
+  const handleInstallClick = async () => {
+    if (!installPromptEvent) {
+      return;
+    }
+    // The type assertion is needed because the default Event type doesn't have prompt()
+    const promptEvent = installPromptEvent as any;
+    promptEvent.prompt();
+    const { outcome } = await promptEvent.userChoice;
+    console.log(`User response to the install prompt: ${outcome}`);
+    setInstallPromptEvent(null);
   };
 
 
@@ -129,6 +151,8 @@ const App: React.FC = () => {
           onClearFilters={clearFilters}
           currentView={view}
           onViewChange={setView}
+          showInstallButton={!!installPromptEvent}
+          onInstallClick={handleInstallClick}
         />
         
         {updateRegistration && (

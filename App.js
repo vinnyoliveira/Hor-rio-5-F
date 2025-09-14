@@ -60,7 +60,17 @@ const App = () => {
   const [view, setView] = useState('table');
   const [activeFilters, setActiveFilters] = useState([]);
   const [updateRegistration, setUpdateRegistration] = useState(null);
+  const [installPromptEvent, setInstallPromptEvent] = useState(null);
   const currentTime = useCurrentTime();
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e) => {
+      e.preventDefault();
+      setInstallPromptEvent(e);
+    };
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+  }, []);
 
   useEffect(() => {
     const handleNewVersion = (event) => {
@@ -87,6 +97,16 @@ const App = () => {
     if (updateRegistration && updateRegistration.waiting) {
       updateRegistration.waiting.postMessage({ type: 'SKIP_WAITING' });
     }
+  };
+
+  const handleInstallClick = async () => {
+    if (!installPromptEvent) {
+      return;
+    }
+    installPromptEvent.prompt();
+    const { outcome } = await installPromptEvent.userChoice;
+    console.log(`User response to the install prompt: ${outcome}`);
+    setInstallPromptEvent(null);
   };
 
 
@@ -141,7 +161,9 @@ const App = () => {
             onFilterChange: handleFilterChange,
             onClearFilters: clearFilters,
             currentView: view,
-            onViewChange: setView
+            onViewChange: setView,
+            showInstallButton: !!installPromptEvent,
+            onInstallClick: handleInstallClick
           }),
           updateRegistration && (_jsx("div", {
             className: "fixed bottom-24 left-1/2 -translate-x-1/2 z-50",

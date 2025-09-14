@@ -12,6 +12,26 @@ const Controls = (props) => {
         _jsxs("div", {
           className: "fixed bottom-4 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 bg-gray-900/50 backdrop-blur-xl border border-gray-700/50 rounded-full shadow-2xl p-2",
           children: [
+            props.showInstallButton && (
+              _jsx("button", {
+                onClick: props.onInstallClick,
+                className: "flex items-center justify-center h-12 w-12 bg-gray-800/60 rounded-full text-gray-300 hover:bg-indigo-600/80 hover:text-white transition-all duration-300 ease-in-out transform hover:scale-110 focus:outline-none",
+                "aria-label": "Instalar Aplicação",
+                children: _jsx("svg", {
+                  xmlns: "http://www.w3.org/2000/svg",
+                  className: "h-6 w-6",
+                  fill: "none",
+                  viewBox: "0 0 24 24",
+                  stroke: "currentColor",
+                  strokeWidth: 2,
+                  children: _jsx("path", {
+                    strokeLinecap: "round",
+                    strokeLinejoin: "round",
+                    d: "M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                  })
+                })
+              })
+            ),
             _jsxs("button", {
               onClick: () => setIsFilterModalOpen(true),
               className: "relative flex items-center justify-center h-12 w-12 bg-gray-800/60 rounded-full text-gray-300 hover:bg-indigo-600/80 hover:text-white transition-all duration-300 ease-in-out transform hover:scale-110 focus:outline-none",
