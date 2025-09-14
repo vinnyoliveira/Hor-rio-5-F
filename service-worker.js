@@ -1,4 +1,5 @@
-const CACHE_NAME = 'school-schedule-v3';
+
+const CACHE_NAME = 'school-schedule-v4';
 const URLS_TO_CACHE = [
   './',
   './index.html',
@@ -16,8 +17,7 @@ const URLS_TO_CACHE = [
   './components/views/ListView.js',
   './components/Controls.js',
   './components/FilterModal.js',
-  './components/NextClassNotifier.js',
-  'https://cdn.tailwindcss.com/'
+  './components/NextClassNotifier.js'
 ];
 
 // On install, cache the app shell
