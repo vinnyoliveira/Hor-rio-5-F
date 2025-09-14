@@ -1,23 +1,23 @@
 
 const CACHE_NAME = 'school-schedule-v4';
 const URLS_TO_CACHE = [
-  './',
-  './index.html',
-  './manifest.json',
-  './icons/icon-192x192.png',
-  './icons/icon-512x512.png',
-  './index.js',
-  './App.js',
-  './constants.js',
-  './hooks/useCurrentTime.js',
-  './components/Schedule.js',
-  './components/ScheduleCell.js',
-  './components/ViewSwitcher.js',
-  './components/views/TableView.js',
-  './components/views/ListView.js',
-  './components/Controls.js',
-  './components/FilterModal.js',
-  './components/NextClassNotifier.js'
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/icons/icon-192x192.png',
+  '/icons/icon-512x512.png',
+  '/index.js',
+  '/App.js',
+  '/constants.js',
+  '/hooks/useCurrentTime.js',
+  '/components/Schedule.js',
+  '/components/ScheduleCell.js',
+  '/components/ViewSwitcher.js',
+  '/components/views/TableView.js',
+  '/components/views/ListView.js',
+  '/components/Controls.js',
+  '/components/FilterModal.js',
+  '/components/NextClassNotifier.js'
 ];
 
 // On install, cache the app shell
