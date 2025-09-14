@@ -1,4 +1,3 @@
-import { jsx as _jsx } from 'react/jsx-runtime';
 import React, { useMemo, useState, useEffect } from 'react';
 import { SCHEDULE_DATA, DAYS_OF_WEEK_KEYS } from '../constants.js';
 import { useCurrentTime } from '../hooks/useCurrentTime.js';
@@ -93,21 +92,18 @@ const Schedule = ({ view, activeFilters }) => {
     };
     switch (view) {
       case 'list':
-        return _jsx(ListView, { ...props });
+        return React.createElement(ListView, props);
       case 'magazine':
-        return _jsx(MagazineView, { ...props });
+        return React.createElement(MagazineView, props);
       case 'table':
       default:
-        return _jsx(TableView, { ...props });
+        return React.createElement(TableView, props);
     }
   };
 
-  return (
-    _jsx("div", {
-      className: `transition-opacity duration-300 ease-in-out ${isTransitioning ? 'opacity-0' : 'opacity-100'}`,
-      children: renderView()
-    })
-  );
+  return React.createElement("div", {
+    className: `transition-opacity duration-300 ease-in-out ${isTransitioning ? 'opacity-0' : 'opacity-100'}`
+  }, renderView());
 };
 
 export default Schedule;

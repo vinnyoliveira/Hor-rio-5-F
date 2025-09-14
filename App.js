@@ -1,5 +1,4 @@
-import { jsx as _jsx, jsxs as _jsxs } from 'react/jsx-runtime';
-import { useState, useCallback, useMemo, useEffect } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import Schedule from './components/Schedule.js';
 import { ALL_SUBJECTS, SCHEDULE_DATA, DAYS_OF_WEEK_KEYS, DAYS_OF_WEEK } from './constants.js';
 import Controls from './components/Controls.js';
@@ -103,8 +102,10 @@ const App = () => {
     if (!installPromptEvent) {
       return;
     }
-    installPromptEvent.prompt();
-    const { outcome } = await installPromptEvent.userChoice;
+    
+    const promptEvent = installPromptEvent;
+    promptEvent.prompt();
+    const { outcome } = await promptEvent.userChoice;
     console.log(`User response to the install prompt: ${outcome}`);
     setInstallPromptEvent(null);
   };
@@ -124,73 +125,43 @@ const App = () => {
 
   const nextClass = useMemo(() => findNextClass(SCHEDULE_DATA, currentTime), [currentTime]);
 
-  return (
-    _jsx("div", {
-      className: "min-h-screen bg-gray-950 text-gray-100 flex flex-col items-center p-2 sm:p-4 md:p-6",
-      children: _jsxs("div", {
-        className: "w-full max-w-7xl mx-auto pb-28",
-        children: [
-          _jsxs("header", {
-            className: "mb-6 text-center",
-            children: [
-              _jsx("h1", {
-                className: "text-3xl sm:text-4xl font-bold text-gray-200",
-                children: "AGRUPAMENTO DE ESCOLAS J\u00DADICE FIALHO"
-              }),
-              _jsx("p", {
-                className: "text-lg text-gray-300 mt-1",
-                children: "Ano Letivo: 2025/2026"
-              }),
-              _jsx("p", {
-                className: "text-xl font-semibold text-indigo-400 mt-2",
-                children: "Turma: 5\u00BAF"
-              })
-            ]
-          }),
-          _jsx(NextClassNotifier, { nextClass: nextClass }),
-          _jsx("main", {
-            className: "mt-6 bg-black/30 backdrop-blur-xl border border-gray-800 rounded-2xl shadow-lg overflow-hidden",
-            children: _jsx(Schedule, {
-              view: view,
-              activeFilters: activeFilters
-            })
-          }),
-          _jsx(Controls, {
-            subjects: ALL_SUBJECTS,
-            activeFilters: activeFilters,
-            onFilterChange: handleFilterChange,
-            onClearFilters: clearFilters,
-            currentView: view,
-            onViewChange: setView,
-            showInstallButton: !!installPromptEvent,
-            onInstallClick: handleInstallClick
-          }),
-          updateRegistration && (_jsx("div", {
-            className: "fixed bottom-24 left-1/2 -translate-x-1/2 z-50",
-            children: _jsxs("div", {
-              className: "flex items-center gap-4 bg-gray-800 backdrop-blur-md border border-gray-700 rounded-lg p-3 shadow-lg animate-fade-in-up",
-              children: [
-                _jsx("p", {
-                  className: "text-white font-semibold",
-                  children: "Nova vers\u00E3o dispon\u00EDvel!"
-                }),
-                _jsx("button", {
-                  onClick: applyUpdate,
-                  className: "px-4 py-1.5 font-bold text-sm text-white bg-indigo-600 rounded-md hover:bg-indigo-700 transition-colors",
-                  children: "Atualizar"
-                })
-              ]
-            })
-          })),
-          _jsx("footer", {
-            className: "text-center mt-20 mb-6 text-sm text-gray-500",
-            children: _jsx("p", {
-              children: "Entrada em Vigor: 01 de setembro de 2025 | Data de validade: 31 de agosto de 2026"
-            })
-          })
-        ]
-      })
-    })
+  return React.createElement("div", { className: "min-h-screen bg-gray-950 text-gray-100 flex flex-col items-center p-2 sm:p-4 md:p-6" },
+    React.createElement("div", { className: "w-full max-w-7xl mx-auto pb-28" },
+      React.createElement("header", { className: "mb-6 text-center" },
+        React.createElement("h1", { className: "text-3xl sm:text-4xl font-bold text-gray-200" }, "AGRUPAMENTO DE ESCOLAS JÚDICE FIALHO"),
+        React.createElement("p", { className: "text-lg text-gray-300 mt-1" }, "Ano Letivo: 2025/2026"),
+        React.createElement("p", { className: "text-xl font-semibold text-indigo-400 mt-2" }, "Turma: 5ºF")
+      ),
+      React.createElement(NextClassNotifier, { nextClass: nextClass }),
+      React.createElement("main", { className: "mt-6 bg-black/30 backdrop-blur-xl border border-gray-800 rounded-2xl shadow-lg overflow-hidden" },
+        React.createElement(Schedule, {
+          view: view,
+          activeFilters: activeFilters
+        })
+      ),
+      React.createElement(Controls, {
+        subjects: ALL_SUBJECTS,
+        activeFilters: activeFilters,
+        onFilterChange: handleFilterChange,
+        onClearFilters: clearFilters,
+        currentView: view,
+        onViewChange: setView,
+        showInstallButton: !!installPromptEvent,
+        onInstallClick: handleInstallClick
+      }),
+      updateRegistration && React.createElement("div", { className: "fixed bottom-24 left-1/2 -translate-x-1/2 z-50" },
+        React.createElement("div", { className: "flex items-center gap-4 bg-gray-800 backdrop-blur-md border border-gray-700 rounded-lg p-3 shadow-lg animate-fade-in-up" },
+          React.createElement("p", { className: "text-white font-semibold" }, "Nova versão disponível!"),
+          React.createElement("button", {
+            onClick: applyUpdate,
+            className: "px-4 py-1.5 font-bold text-sm text-white bg-indigo-600 rounded-md hover:bg-indigo-700 transition-colors"
+          }, "Atualizar")
+        )
+      ),
+      React.createElement("footer", { className: "text-center mt-20 mb-6 text-sm text-gray-500" },
+        React.createElement("p", null, "Entrada em Vigor: 01 de setembro de 2025 | Data de validade: 31 de agosto de 2026")
+      )
+    )
   );
 };
 

@@ -1,4 +1,3 @@
-import { jsx as _jsx, jsxs as _jsxs } from 'react/jsx-runtime';
 import React, { useState, useEffect } from 'react';
 import { DAYS_OF_WEEK, DAYS_OF_WEEK_KEYS } from '../../constants.js';
 import ScheduleCell from '../ScheduleCell.js';
@@ -26,101 +25,61 @@ const TableView = ({ scheduleData, highlightedClassInfo, currentDayIndex }) => {
   if (isMobile) {
     const mobileDayKey = DAYS_OF_WEEK_KEYS[mobileDayIndex];
     
-    return (
-      _jsxs("div", {
-        className: "grid grid-cols-[auto,1fr] gap-1 p-1 sm:p-2",
-        children: [
-          _jsx("div", { className: "sticky top-0 z-10 bg-black/30 backdrop-blur-sm" }),
-          _jsxs("div", {
-            className: "sticky top-0 z-10 p-3 text-center font-bold text-gray-300 border-b border-gray-800 bg-gray-900/60 backdrop-blur-sm flex items-center justify-between",
-            children: [
-              _jsx("button", {
-                onClick: () => setMobileDayIndex(prev => Math.max(0, prev - 1)),
-                disabled: mobileDayIndex === 0,
-                className: "p-1 rounded-full text-gray-300 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors",
-                "aria-label": "Previous Day",
-                children: _jsx("svg", {
-                  xmlns: "http://www.w3.org/2000/svg",
-                  className: "h-5 w-5",
-                  viewBox: "0 0 20 20",
-                  fill: "currentColor",
-                  children: _jsx("path", {
-                    fillRule: "evenodd",
-                    d: "M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z",
-                    clipRule: "evenodd"
-                  })
-                })
-              }),
-              _jsx("span", { children: DAYS_OF_WEEK[mobileDayIndex] }),
-              _jsx("button", {
-                onClick: () => setMobileDayIndex(prev => Math.min(4, prev + 1)),
-                disabled: mobileDayIndex === 4,
-                className: "p-1 rounded-full text-gray-300 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors",
-                "aria-label": "Next Day",
-                children: _jsx("svg", {
-                  xmlns: "http://www.w3.org/2000/svg",
-                  className: "h-5 w-5",
-                  viewBox: "0 0 20 20",
-                  fill: "currentColor",
-                  children: _jsx("path", {
-                    fillRule: "evenodd",
-                    d: "M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z",
-                    clipRule: "evenodd"
-                  })
-                })
-              })
-            ]
-          }),
-          scheduleData.map((slot, rowIndex) => (
-            _jsxs(React.Fragment, {
-              children: [
-                _jsx("div", {
-                  className: "p-2 text-center font-semibold text-xs text-gray-400 bg-black/30 backdrop-blur-sm flex items-center justify-center sticky left-0 z-10 whitespace-pre",
-                  children: slot.time.replace(' - ', '\n')
-                }),
-                _jsx(ScheduleCell, {
-                  daySchedule: slot[mobileDayKey],
-                  isCurrent: rowIndex === highlightedClassInfo.rowIndex && mobileDayIndex === highlightedClassInfo.dayIndex,
-                  isCurrentDay: mobileDayIndex === currentDayIndex
-                }, `${slot.time}-${mobileDayKey}`)
-              ]
-            }, slot.time)
-          ))
-        ]
-      })
+    return React.createElement("div", { className: "grid grid-cols-[auto,1fr] gap-1 p-1 sm:p-2" },
+      React.createElement("div", { className: "sticky top-0 z-10 bg-black/30 backdrop-blur-sm" }),
+      React.createElement("div", { className: "sticky top-0 z-10 p-3 text-center font-bold text-gray-300 border-b border-gray-800 bg-gray-900/60 backdrop-blur-sm flex items-center justify-between" },
+        React.createElement("button", {
+          onClick: () => setMobileDayIndex(prev => Math.max(0, prev - 1)),
+          disabled: mobileDayIndex === 0,
+          className: "p-1 rounded-full text-gray-300 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors",
+          "aria-label": "Previous Day"
+        }, React.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor" }, React.createElement("path", { fillRule: "evenodd", d: "M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z", clipRule: "evenodd" }))),
+        React.createElement("span", null, DAYS_OF_WEEK[mobileDayIndex]),
+        React.createElement("button", {
+          onClick: () => setMobileDayIndex(prev => Math.min(4, prev + 1)),
+          disabled: mobileDayIndex === 4,
+          className: "p-1 rounded-full text-gray-300 hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors",
+          "aria-label": "Next Day"
+        }, React.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", className: "h-5 w-5", viewBox: "0 0 20 20", fill: "currentColor" }, React.createElement("path", { fillRule: "evenodd", d: "M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z", clipRule: "evenodd" })))
+      ),
+      scheduleData.map((slot, rowIndex) => (
+          React.createElement(React.Fragment, { key: slot.time },
+            React.createElement("div", { className: "p-2 text-center font-semibold text-xs text-gray-400 bg-black/30 backdrop-blur-sm flex items-center justify-center sticky left-0 z-10 whitespace-pre" },
+              slot.time.replace(' - ', '\n')
+            ),
+            React.createElement(ScheduleCell, {
+              key: `${slot.time}-${mobileDayKey}`,
+              daySchedule: slot[mobileDayKey],
+              isCurrent: rowIndex === highlightedClassInfo.rowIndex && mobileDayIndex === highlightedClassInfo.dayIndex,
+              isCurrentDay: mobileDayIndex === currentDayIndex
+            })
+          )
+      ))
     );
   }
 
-  return (
-    _jsxs("div", {
-      className: "grid grid-cols-[auto,1fr,1fr,1fr,1fr,1fr] gap-1 p-1 sm:p-2",
-      children: [
-        _jsx("div", { className: "sticky top-0 z-10 bg-black/30 backdrop-blur-sm" }),
-        DAYS_OF_WEEK.map((day, dayIndex) => (
-          _jsx("div", {
-            className: `sticky top-0 z-10 p-3 text-center font-bold text-gray-300 border-b border-gray-800 transition-colors ${dayIndex === currentDayIndex ? 'bg-gray-900/60 backdrop-blur-sm' : 'bg-black/30 backdrop-blur-sm'}`,
-            children: day
-          }, day)
-        )),
-        scheduleData.map((slot, rowIndex) => (
-          _jsxs(React.Fragment, {
-            children: [
-              _jsx("div", {
-                className: "p-2 text-center font-semibold text-xs text-gray-400 bg-black/30 backdrop-blur-sm flex items-center justify-center sticky left-0 z-10 whitespace-pre",
-                children: slot.time.replace(' - ', '\n')
-              }),
-              DAYS_OF_WEEK_KEYS.map((dayKey, dayIndex) => (
-                _jsx(ScheduleCell, {
-                  daySchedule: slot[dayKey],
-                  isCurrent: rowIndex === highlightedClassInfo.rowIndex && dayIndex === highlightedClassInfo.dayIndex,
-                  isCurrentDay: dayIndex === currentDayIndex
-                }, `${slot.time}-${dayKey}`)
-              ))
-            ]
-          }, slot.time)
+  return React.createElement("div", { className: "grid grid-cols-[auto,1fr,1fr,1fr,1fr,1fr] gap-1 p-1 sm:p-2" },
+    React.createElement("div", { className: "sticky top-0 z-10 bg-black/30 backdrop-blur-sm" }),
+    DAYS_OF_WEEK.map((day, dayIndex) => (
+      React.createElement("div", { key: day, className: `sticky top-0 z-10 p-3 text-center font-bold text-gray-300 border-b border-gray-800 transition-colors ${dayIndex === currentDayIndex ? 'bg-gray-900/60 backdrop-blur-sm' : 'bg-black/30 backdrop-blur-sm'}` },
+        day
+      )
+    )),
+    scheduleData.map((slot, rowIndex) => (
+      React.createElement(React.Fragment, { key: slot.time },
+        React.createElement("div", { className: "p-2 text-center font-semibold text-xs text-gray-400 bg-black/30 backdrop-blur-sm flex items-center justify-center sticky left-0 z-10 whitespace-pre" },
+          slot.time.replace(' - ', '\n')
+        ),
+        DAYS_OF_WEEK_KEYS.map((dayKey, dayIndex) => (
+          React.createElement(ScheduleCell, {
+            key: `${slot.time}-${dayKey}`,
+            daySchedule: slot[dayKey],
+            isCurrent: rowIndex === highlightedClassInfo.rowIndex && dayIndex === highlightedClassInfo.dayIndex,
+            isCurrentDay: dayIndex === currentDayIndex
+          })
         ))
-      ]
-    })
+      )
+    ))
   );
 };
 
