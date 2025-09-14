@@ -5,19 +5,23 @@ import ScheduleCell from '../ScheduleCell.js';
 
 const TableView = ({ scheduleData, highlightedClassInfo, currentDayIndex }) => {
   const [mobileDayIndex, setMobileDayIndex] = useState(currentDayIndex);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     // Sync the viewed day with the actual current day if it changes
     setMobileDayIndex(currentDayIndex);
   }, [currentDayIndex]);
-
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   if (isMobile) {
     const mobileDayKey = DAYS_OF_WEEK_KEYS[mobileDayIndex];
