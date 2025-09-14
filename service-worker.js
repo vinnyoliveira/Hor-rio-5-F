@@ -1,23 +1,22 @@
-const CACHE_NAME = 'school-schedule-v2';
+const CACHE_NAME = 'school-schedule-v3';
 const URLS_TO_CACHE = [
   './',
   './index.html',
   './manifest.json',
   './icons/icon-192x192.png',
   './icons/icon-512x512.png',
-  './index.tsx',
-  './App.tsx',
-  './types.ts',
-  './constants.ts',
-  './hooks/useCurrentTime.ts',
-  './components/Schedule.tsx',
-  './components/ScheduleCell.tsx',
-  './components/ViewSwitcher.tsx',
-  './components/views/TableView.tsx',
-  './components/views/ListView.tsx',
-  './components/Controls.tsx',
-  './components/FilterModal.tsx',
-  './components/NextClassNotifier.tsx',
+  './index.js',
+  './App.js',
+  './constants.js',
+  './hooks/useCurrentTime.js',
+  './components/Schedule.js',
+  './components/ScheduleCell.js',
+  './components/ViewSwitcher.js',
+  './components/views/TableView.js',
+  './components/views/ListView.js',
+  './components/Controls.js',
+  './components/FilterModal.js',
+  './components/NextClassNotifier.js',
   'https://cdn.tailwindcss.com/'
 ];
 
@@ -65,7 +64,7 @@ self.addEventListener('fetch', event => {
       return cache.match(event.request).then(cachedResponse => {
         const fetchPromise = fetch(event.request).then(networkResponse => {
           // If we got a valid response, update the cache
-          if (networkResponse.ok) {
+          if (networkResponse && networkResponse.ok) {
             cache.put(event.request, networkResponse.clone());
           }
           return networkResponse;
